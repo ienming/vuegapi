@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="info"></div>
+    <div id="app">
+      <ul v-for="item in info">
+        <li>{{ item[0] }}</li>
+        <li>{{ item[1] }}</li>
+        <li>{{ item[2] }}</li>
+        <li>{{ item[3] }}</li>
+      </ul>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"
+      integrity="sha512-YXLGLsQBiwHPHLCAA9npZWhADUsHECjkZ71D1uzT2Hpop82/eLnmFb6b0jo8pK4T0Au0g2FETrRJNblF/46ZzQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      const url =
+        "https://sheets.googleapis.com/v4/spreadsheets/10KtWadJ8rqtD6A_EwbWc0bdRQjnhi8zMt11WgGpnd88/values/A2:D4?key=AIzaSyC07hm_OLxH_JllYoJI2WNmOQmd4WeDWZ4";
+
+      // Vue
+      let vm = new Vue({
+        el: "#app",
+        data() {
+          return {
+            info: [],
+          };
+        },
+        mounted() {
+          axios
+            .get(url)
+            .then((response) => {
+              response.data.values.forEach((el) => {
+                this.info.push(el);
+              });
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        },
+      });
+    </script>
+  </body>
+</html>
